@@ -15,3 +15,4 @@ docker compose up -d
 - **Agent Service (Python/FastAPI)**: Google Cloud Run
 - **Runner (Sandboxed Workers)**: Dedicated VM / GKE Node Pool
 - **Database**: Google Cloud SQL (PostgreSQL)
+

@@ -32,3 +32,4 @@ Rather than splitting the business logic into separate microservices (`auth-serv
 2. **Runner (Code Execution Sandbox)**:
    - **Critical Security Boundary**: Executing untrusted student/user code inside the main Spring Boot process would be fatal to stability and security.
    - The runner runs on hardened VMs, Docker-in-Docker, or gVisor sandbox runtimes with hard memory/CPU limits and zero access to database credentials.
+

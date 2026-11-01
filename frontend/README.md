@@ -19,3 +19,4 @@ Runs at `http://localhost:3000`.
 ## 🌐 Deployment
 - **Target**: Vercel / Firebase App Hosting
 - Builds standard static/SSR Next.js artifacts.
+

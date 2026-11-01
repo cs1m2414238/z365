@@ -5,3 +5,4 @@ Contains cross-service schemas, types, DTO contracts, and shared protocols acros
 ## 📁 Contents
 - `schemas/`: JSON schemas for service-to-service communication.
 - Can be expanded to OpenAPI specifications, Protocol Buffers (`.proto`), or shared TypeScript/Java types via generators.
+

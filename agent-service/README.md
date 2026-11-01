@@ -24,3 +24,4 @@ Runs at `http://localhost:8000`. API docs available at `http://localhost:8000/do
 ## 🌐 Deployment
 - **Target**: Google Cloud Run
 - Scalable on demand (can scale to zero when idle).
+
