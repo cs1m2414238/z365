@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: z365-postgres
+    environment:
+      POSTGRES_DB: z365_db
+      POSTGRES_USER: z365_user
+      POSTGRES_PASSWORD: z365_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: z365-redis
+    ports:
+      - "6379:6379"
+
+  agent-service:
+    build:
+      context: ../agent-service
+      dockerfile: Dockerfile
+    container_name: z365-agent-service
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+
+  runner:
+    build:
+      context: ../runner
+      dockerfile: Dockerfile
+    container_name: z365-runner
+    ports:
+      - "8081:8081"
+    environment:
+      - ENVIRONMENT=development
+
+volumes:
+  postgres_data:

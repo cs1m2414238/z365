@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecutionRequest",
+  "type": "object",
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["python", "javascript", "java", "cpp"]
+    },
+    "code": {
+      "type": "string"
+    },
+    "timeout_seconds": {
+      "type": "integer",
+      "default": 5
+    }
+  },
+  "required": ["language", "code"]
+}

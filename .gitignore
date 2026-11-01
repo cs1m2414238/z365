@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.venv/
+env/
+venv/
+ENV/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+target/
+*.class
+*.jar
+*.war
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Environment and secrets
+.env
+.env*.local
+*.pem
+*.key
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+*.iml
+.vscode/*
+!.vscode/settings.json

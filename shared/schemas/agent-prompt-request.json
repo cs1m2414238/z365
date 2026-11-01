@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentPromptRequest",
+  "type": "object",
+  "properties": {
+    "prompt": {
+      "type": "string"
+    },
+    "context": {
+      "type": "object"
+    },
+    "language": {
+      "type": "string",
+      "default": "python"
+    }
+  },
+  "required": ["prompt"]
+}
