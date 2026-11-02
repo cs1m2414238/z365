@@ -1,0 +1,52 @@
+name: Z365 Backend CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_DB: z365_db
+          POSTGRES_USER: z365_user
+          POSTGRES_PASSWORD: z365_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+          cache: maven
+
+      - name: Verify Java Version
+        run: java -version
+
+      - name: Build and Test with Maven
+        working-directory: apps/core-api
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_NAME: z365_db
+          DB_USER: z365_user
+          DB_PASSWORD: z365_password
+          DOCKER_AVAILABLE: "true"
+        run: ./mvnw clean verify
+

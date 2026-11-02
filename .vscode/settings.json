@@ -1,3 +1,17 @@
 {
-  "git.ignoreLimitWarning": true
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-25",
+      "path": "C:\\Users\\lenovo\\.jdks\\jdk-25.0.5.0.2+1",
+      "default": true
+    }
+  ],
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.jdt.ls.java.home": "C:\\Users\\lenovo\\.jdks\\jdk-25.0.5.0.2+1",
+  "maven.terminal.customEnv": [
+    {
+      "environmentVariable": "JAVA_HOME",
+      "value": "C:\\Users\\lenovo\\.jdks\\jdk-25.0.5.0.2+1"
+    }
+  ]
 }

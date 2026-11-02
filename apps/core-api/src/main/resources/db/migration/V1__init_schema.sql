@@ -1,0 +1,77 @@
+-- Schema Initialization for Z365 Core Modular Monolith
+
+CREATE TABLE IF NOT EXISTS users (
+    id VARCHAR(36) PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'ROLE_USER',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS challenges (
+    id VARCHAR(36) PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    slug VARCHAR(180) NOT NULL UNIQUE,
+    description TEXT NOT NULL,
+    difficulty VARCHAR(20) NOT NULL, -- EASY, MEDIUM, HARD
+    status VARCHAR(20) NOT NULL DEFAULT 'PUBLISHED', -- DRAFT, PUBLISHED, ARCHIVED
+    points INT NOT NULL DEFAULT 10,
+    time_limit_ms INT NOT NULL DEFAULT 2000,
+    memory_limit_mb INT NOT NULL DEFAULT 256,
+    starter_code TEXT,
+    solution_template TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_challenges_difficulty ON challenges(difficulty);
+CREATE INDEX IF NOT EXISTS idx_challenges_status ON challenges(status);
+
+CREATE TABLE IF NOT EXISTS skills (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    category VARCHAR(50) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS challenge_skills (
+    challenge_id VARCHAR(36) NOT NULL REFERENCES challenges(id) ON DELETE CASCADE,
+    skill_id VARCHAR(36) NOT NULL REFERENCES skills(id) ON DELETE CASCADE,
+    PRIMARY KEY (challenge_id, skill_id)
+);
+
+CREATE TABLE IF NOT EXISTS learning_tracks (
+    id VARCHAR(36) PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    slug VARCHAR(180) NOT NULL UNIQUE,
+    description TEXT,
+    level VARCHAR(20) NOT NULL DEFAULT 'BEGINNER',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS submissions (
+    id VARCHAR(36) PRIMARY KEY,
+    challenge_id VARCHAR(36) NOT NULL REFERENCES challenges(id) ON DELETE CASCADE,
+    user_id VARCHAR(36) NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    status VARCHAR(30) NOT NULL, -- PENDING, COMPLETED, FAILED, TIMED_OUT
+    language VARCHAR(30) NOT NULL,
+    code TEXT NOT NULL,
+    execution_time_ms INT,
+    memory_used_kb INT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_progress (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36) NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    challenge_id VARCHAR(36) NOT NULL REFERENCES challenges(id) ON DELETE CASCADE,
+    status VARCHAR(30) NOT NULL, -- IN_PROGRESS, SOLVED
+    attempts_count INT NOT NULL DEFAULT 1,
+    solved_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (user_id, challenge_id)
+);
+
