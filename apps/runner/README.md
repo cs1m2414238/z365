@@ -1,28 +1,7 @@
-# Runner Service (Execution Workers)
+# Execution worker scaffold
 
-Execution worker responsible for executing user and student code in an isolated sandbox.
+This directory reserves the separate execution service boundary. `worker.py` is empty; it does not start a server or execute submissions. The Dockerfile and requirements are preparation only.
 
-## 🛡️ Security Rationale
-**Running untrusted code directly inside the Spring Boot API process or main host is a severe security hazard.**
-The runner service runs as an independent, sandboxed service to guarantee:
-- Process isolation
-- Resource quotas (CPU, memory, wall-clock time limit)
-- Network isolation (preventing unauthorized outbound connections)
+Do not run submitted code in the Spring Boot API or directly on the host. A future implementation must provide process/filesystem/network isolation, non-root execution, resource limits, timeouts, output limits and cleanup before accepting untrusted work.
 
-## 🛠️ Tech Stack & Production Targets
-- **Runtime**: Python / Linux worker
-- **Production Isolation**: gVisor (`runsc`), Firecracker microVMs, or hardened Docker containers on a dedicated VM or GKE node pool.
-
-## 🚀 Local Development
-```bash
-cd runner
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-# source .venv/bin/activate
-pip install -r requirements.txt
-python worker.py
-```
-Runs at `http://localhost:8081`.
-
+See the [coding environment plan](../../docs/plans/coding-environment.md). The planned port is 8081; no service currently listens there.

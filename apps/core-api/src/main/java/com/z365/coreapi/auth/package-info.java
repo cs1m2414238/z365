@@ -1,6 +1,6 @@
 /**
  * Authentication & Security Domain Module:
- * Handles token generation, authentication providers, and authorization policies.
+ * Handles account registration and the browser session entry points.
  */
 @org.springframework.modulith.ApplicationModule(
     displayName = "Auth Module"

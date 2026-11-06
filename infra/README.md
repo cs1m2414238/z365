@@ -1,18 +1,12 @@
-# Infrastructure & Deployment
+# Infrastructure
 
-Contains deployment manifests, container definitions, and local orchestrations.
+`docker-compose.yml` currently starts **PostgreSQL only**. From the repository root, copy `.env.example` to `.env`, then run:
 
-## 🐳 Local Development Orchestration
-To spin up all backend dependencies (PostgreSQL, Redis, Agent Service, Runner):
-
-```bash
-docker compose up -d
+```sh
+npm run db:up
+npm run db:down
 ```
 
-## 🌐 Target Cloud Topology
-- **Frontend**: Vercel / Firebase Hosting
-- **Backend (Modular Monolith)**: Google Cloud Run
-- **Agent Service (Python/FastAPI)**: Google Cloud Run
-- **Runner (Sandboxed Workers)**: Dedicated VM / GKE Node Pool
-- **Database**: Google Cloud SQL (PostgreSQL)
+The same commands can be run directly as `docker compose --env-file .env -f infra/docker-compose.yml up -d` and `down`. Stopping the stack keeps the named data volume.
 
+The Java API, Next.js web app, agent service, and runner are started separately. Cloud deployment targets are documented in `docs/deployment.md`; additional infrastructure should be added when needed.

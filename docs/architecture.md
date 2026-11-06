@@ -1,35 +1,30 @@
-# Architectural Decision: Monorepo + Modular Monolith + Distributed Services
+# Architecture
 
-## 1. Summary
-- **Code Organization**: **Monorepo**
-- **Application Core**: **Modular Monolith** (Spring Boot)
-- **Execution & AI**: **Distributed Services** (`runner` and `agent-service`)
-- **Premature 20 Microservices**: Avoided ❌
+Z365 uses a monorepo with a modular monolith for core business behavior and separate services for AI workflows and isolated execution.
 
----
+| Location | Technology | Responsibility |
+| --- | --- | --- |
+| `apps/web` | React, Vite, TypeScript, Tailwind CSS | User interface and workspace |
+| `apps/core-api` | Java 21, Spring Boot 4, Spring Modulith | Identity, challenges, submissions, learning, profiles, and progress |
+| `apps/agent-service` | Python/FastAPI scaffold | Future AI workflows; entry point is empty |
+| `apps/runner` | Python worker scaffold | Future isolated execution; entry point is empty |
+| `packages/contracts` | TypeScript and future generated schemas | Shared boundary models |
+| `infra` | Docker Compose | Local service dependencies |
 
-## 2. Why Monorepo?
-1. **Atomic Commits**: Features spanning Frontend, Backend API, and Agent Service can be modified in a single PR.
-2. **Shared Contracts**: Contracts in `shared/` are immediately accessible to both Java backend and Python services without private npm/maven registries.
-3. **Single CI/CD Configuration**: Centralized linting, testing, and unified workflows.
-4. **Developer Velocity**: No overhead of navigating across 5-10 separate GitHub repositories.
+The root npm workspace includes the web application and contracts only. Maven and Python builds retain their own dependency management. The web app preserves the approved dashboard and separates illustrative demo mode from validated API responses. The core API owns account sessions, profile visibility, platform verification and activity imports. The web app validates their responses with Zod. See [profile API and database inventory](profile-foundation.md).
 
----
+## Core boundaries
 
-## 3. Why Modular Monolith Core?
-Rather than splitting the business logic into separate microservices (`auth-service`, `project-service`, `billing-service`) on Day 1:
-- The **Spring Boot** application contains clean package boundaries (`modules/auth`, `modules/project`, `modules/execution`, etc.).
-- Keeps network hops at zero for core domain interactions.
-- Avoids distributed transaction complexities (Sagas, 2PC).
-- When a domain genuinely needs its own lifecycle or scale factor, it can be extracted cleanly because module boundaries were enforced from the beginning.
+Spring Modulith verifies Java package boundaries. Existing feature packages include `auth`, `users`, `challenges`, `submissions`, `learning`, `progress`, and `skills`; shared infrastructure is in `common` and `config`.
 
----
+Profile capabilities belong in this application. The [profile roadmap](plans/coding-profile.md) maps future activity, rating, achievement, and integration behavior into modules in the core API. Implement modules when their behavior is added rather than creating empty services.
 
-## 4. Why Distributed for `agent-service` and `runner`?
-1. **Agent Service (Python / FastAPI)**:
-   - Python is the primary ecosystem for LLM tooling, LangChain/LlamaIndex, PyTorch, and AI libraries.
-   - Running this separately allows scaling independently on GPU/CPU Cloud Run instances without affecting the Java JVM.
-2. **Runner (Code Execution Sandbox)**:
-   - **Critical Security Boundary**: Executing untrusted student/user code inside the main Spring Boot process would be fatal to stability and security.
-   - The runner runs on hardened VMs, Docker-in-Docker, or gVisor sandbox runtimes with hard memory/CPU limits and zero access to database credentials.
+Profile scores must come from verified Z365 activity. External platform ratings remain source-specific and must not be presented as a universal cross-platform rank. Privacy, authenticated updates, and public-profile access must be enforced in the core API.
 
+## Separate runtimes
+
+AI work benefits from Python's ecosystem and an independent scaling lifecycle. Untrusted code execution requires a stronger isolation boundary than the core API process. The runner scaffold is not itself a production sandbox; real execution requires dedicated isolation, network restrictions, and resource limits.
+
+## Directory migration
+
+The frontend moved from `frontend/` to `apps/web/`, shared files from `shared/` to `packages/contracts/`, and an empty legacy `backend/target` tree was removed. The existing `apps/core-api`, `apps/agent-service`, and `apps/runner` paths were preserved. Root scripts, documentation, shared imports, and frontend CI use the consolidated layout.

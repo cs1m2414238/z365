@@ -8,9 +8,9 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-z365_user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-z365_password}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-z365_user} -d ${POSTGRES_DB:-z365_db}"]
       interval: 10s

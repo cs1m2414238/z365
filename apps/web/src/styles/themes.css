@@ -1,0 +1,834 @@
+/* Z365 Spectrum uses Light and Dark palettes. Dark retains the Focus treatment. */
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f8fa;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-finish: linear-gradient(135deg, transparent 35%, #9277f508);
+  --surface-solid: #ffffff;
+  --border: #e2e6ed;
+  --text: #182236;
+  --muted: #5e6b7e;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #4f46e518;
+  --on-accent: #ffffff;
+  --identity: #825ee9;
+  --color-data: #157fcb;
+  --color-solved: #0284c7;
+  --color-projects: #148b50;
+  --color-debugging: #b87505;
+  --color-agents: #8351d2;
+  --color-rank: #b9810b;
+  --color-progress: #13854b;
+  --color-error: #ac4d69;
+  --skill-java: #bf8505;
+  --skill-backend: #0f9c7a;
+  --skill-sql: #2d85dd;
+  --skill-design: #8a5cdd;
+  --skill-debugging: #d96b49;
+  --accent-reflection: #ffffffc2;
+  --tile-light: #ffffff66;
+  --badge-outline-strength: 82%;
+  --control: #f8fafccc;
+  --track: #e6eaf0;
+  --hover: #edf1f6;
+  --inset-light: #ffffffcc;
+  --surface-shadow:
+    0 9px 26px #2636570b, 0 2px 5px #26365706, inset 0 1px 0 var(--inset-light);
+  --surface-shadow-hover:
+    0 12px 30px #26365712, inset 0 1px 0 var(--inset-light);
+  --sidebar-surface: #ffffffb8;
+  --glass-blur: blur(8px);
+  --profile-surface: linear-gradient(135deg, #ffffffe0, #ede8ff7a);
+  --profile-border: #ffffffd9;
+  --profile-shadow: 0 8px 32px #4b418c12, inset 0 1px 0 #ffffffcc;
+  --profile-wave: #b6a4ec;
+  --profile-wave-opacity: 0.4;
+  --ambient-top: none;
+  --ambient-bottom: none;
+  --heat-0: #edf2ef;
+  --heat-1: #ccecd8;
+  --heat-2: #9bd9b1;
+  --heat-3: #54b575;
+  --heat-4: #258b4d;
+  --badge-face: #f3f6fa;
+  --badge-fill: 0.7;
+  --badge-ink: #ffffff;
+  --badge-sparkle-opacity: 0.75;
+  --stat-tint: 0;
+  --chart-line: #c98a0b;
+  --chart-fill-opacity: 0.14;
+  --chart-tooltip: var(--surface-solid);
+  --chart-tooltip-border: var(--border);
+  /* Existing components consume these compatibility tokens. */
+  --canvas: var(--bg);
+  --ink: var(--text);
+  --purple: var(--accent);
+  --purple-deep: var(--accent);
+  --line: var(--border);
+}
+
+html[data-theme="focus"] {
+  color-scheme: dark;
+  --bg: #0b0c0c;
+  --surface: rgba(26, 27, 28, 0.98);
+  --surface-finish: linear-gradient(135deg, transparent 35%, #ffd15b0a);
+  --surface-solid: #1a1b1c;
+  --border: #45474b;
+  --text: #f1f3f5;
+  --muted: #b1b8c2;
+  --accent: #ffd05a;
+  --accent-hover: #ffde86;
+  --accent-soft: #ffd05a24;
+  --on-accent: #0b0c0c;
+  --identity: #b399ff;
+  --color-data: #63bdff;
+  --color-solved: #37b9ff;
+  --color-projects: #37df9b;
+  --color-debugging: #ffbd4a;
+  --color-agents: #ad87ff;
+  --color-rank: #ffd365;
+  --color-progress: #54e590;
+  --chart-line: #ffd75e;
+  --chart-fill-opacity: 0.1;
+  --color-error: #c394a0;
+  --skill-java: #ffd05a;
+  --skill-backend: #39d6b5;
+  --skill-sql: #5eb8ff;
+  --skill-design: #b08aff;
+  --skill-debugging: #ff9b74;
+  --accent-reflection: #ffffff52;
+  --tile-light: #ffffff18;
+  --badge-outline-strength: 88%;
+  --control: #202223;
+  --track: #333638;
+  --hover: #26282a;
+  --inset-light: #ffffff14;
+  --surface-shadow: inset 0 1px 0 var(--inset-light);
+  --surface-shadow-hover: inset 0 1px 0 #ffffff0d;
+  --sidebar-surface: #111213f5;
+  --glass-blur: none;
+  --profile-surface: linear-gradient(135deg, #1b1c1df5, #2f281beb);
+  --profile-border: #d4aa4d80;
+  --profile-shadow: inset 0 1px 0 #ffe5aa38;
+  --profile-wave: #ffd15b;
+  --profile-wave-opacity: 0.2;
+  --ambient-top: none;
+  --ambient-bottom: none;
+  --heat-0: #172b20;
+  --heat-1: #1b6438;
+  --heat-2: #24a85a;
+  --heat-3: #45d76d;
+  --heat-4: #8df594;
+  --badge-face: #1a1b1c;
+  --badge-fill: 0.22;
+  --badge-sparkle-opacity: 0;
+  --stat-tint: 0;
+}
+
+html[data-theme] body {
+  background: var(--bg);
+  color: var(--text);
+}
+.ambient {
+  border-color: transparent;
+  filter: none;
+  opacity: 1;
+}
+.ambient-one {
+  background: var(--ambient-top);
+}
+.ambient-two {
+  background: var(--ambient-bottom);
+}
+
+html[data-theme] .glass {
+  background: var(--surface-finish), var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--surface-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+html[data-theme] .glass:is(.card, .stat-card) {
+  position: relative;
+  isolation: isolate;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+html[data-theme] .profile-hero {
+  background: var(--profile-surface);
+  border-color: var(--profile-border);
+  box-shadow: var(--profile-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+html[data-theme] .hero-waves {
+  opacity: var(--profile-wave-opacity);
+}
+html[data-theme] .hero-waves path {
+  fill: var(--profile-wave);
+}
+html[data-theme] .sidebar {
+  background: var(--sidebar-surface);
+  border-right-color: var(--border);
+  box-shadow: inset -1px 0 0 var(--inset-light);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+html[data-theme] .topbar {
+  background: transparent;
+  border-color: var(--border);
+}
+html[data-theme] .workspace-shell > .topbar {
+  background: var(--sidebar-surface);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+html[data-theme] .brand {
+  color: var(--text);
+}
+html[data-theme] .brand-period,
+html[data-theme] .page-heading h1 > span {
+  color: var(--identity);
+}
+html[data-theme] .nav-item {
+  color: var(--muted);
+}
+html[data-theme] .nav-item svg {
+  color: inherit;
+}
+html[data-theme] .nav-item:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+html[data-theme] .nav-item.active {
+  background: var(--accent-soft);
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  box-shadow: inset 0 1px 0 var(--inset-light);
+}
+html[data-theme] .nav-item.active svg {
+  color: var(--accent);
+}
+html[data-theme="light"] .nav-item.active {
+  background: var(--accent);
+  color: #fff;
+}
+html[data-theme="light"] .nav-item.active svg {
+  color: #fff;
+}
+html[data-theme] .nav-new {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+html[data-theme] .streak-card {
+  background: var(--surface-finish), var(--surface);
+  border-color: var(--border);
+  box-shadow: inset 0 1px 0 var(--inset-light);
+}
+html[data-theme] .streak-flame {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: none;
+}
+html[data-theme] .streak-stars {
+  color: var(--track);
+  text-shadow: -18px -12px 0 var(--hover);
+}
+html[data-theme] .sidebar-account {
+  border-color: var(--border);
+}
+
+/* Typography and spacing remain in globals.css; these rules change colors. */
+html[data-theme]
+  :is(
+    .workspace-label,
+    .breadcrumb,
+    .breadcrumb > strong,
+    .heading-eyebrow,
+    .page-heading p,
+    .page-footer,
+    .profile-overline,
+    .profile-handle,
+    .profile-identity > p,
+    .profile-meta > span,
+    .profile-meta svg,
+    .stat-label,
+    .card-description,
+    .skill-name,
+    .platform-rank,
+    .activity-row p,
+    .activity-row > div > span,
+    .activity-row time,
+    .achievement > strong,
+    .achievement > span:last-child,
+    .achievement-footer > span,
+    .activity-footer,
+    .heatmap-subheading,
+    .heatmap-bottom,
+    .heatmap-months,
+    .heatmap-day-labels,
+    .card-footnote,
+    .rank-content > p,
+    .rank-content > p strong,
+    .rank-number > span,
+    .heatmap-subheading strong,
+    .heatmap-detail strong,
+    .modal-heading p,
+    .field-note,
+    .form-actions > span,
+    .panel-empty,
+    .connection-row > div > span,
+    .connection-row small,
+    .platform-table-heading,
+    .streak-card p,
+    .streak-card a,
+    .sidebar-account > div > span,
+    .help-link,
+    .subtle-icon,
+    .social-links a,
+    .skill-icon,
+    .info-button,
+    .card-heading h2 > svg,
+    .breadcrumb > svg,
+    .resource-card > p,
+    .resource-meta,
+    .resource-category,
+    .resource-progress-label,
+    .resource-progress-label strong,
+    .library-banner p,
+    .library-section-heading p,
+    .library-empty p,
+    .checklist-note,
+    .filter-tabs > button,
+    .library-section-heading h2 > span,
+    .help-content > p,
+    .notification-list p,
+    .search-results > a > div > span,
+    .achievement-detail > span:last-child
+  ) {
+  color: var(--muted);
+}
+html[data-theme]
+  :is(
+    .card-heading h2,
+    .profile-name h2,
+    .stat-value,
+    .rank-number,
+    .rating-value > strong,
+    .platform-row > strong,
+    .activity-row p strong,
+    .modal-heading h2,
+    .account-popover > strong,
+    .connection-row strong,
+    .streak-card strong,
+    .sidebar-account strong,
+    .skill-row > strong,
+    .notification-list strong,
+    .help-content > p strong,
+    .search-results strong,
+    .achievement-detail > p,
+    .rank-explainer > p
+  ) {
+  color: var(--text);
+}
+html[data-theme]
+  :is(.view-all, .panel-error button, .resource-continue, .connection-row > a) {
+  color: var(--accent);
+}
+html[data-theme]
+  :is(
+    .streak-card a,
+    .activity-row,
+    .achievement-footer,
+    .form-actions,
+    .platform-modal-list > a,
+    .connection-row,
+    .platform-link-form,
+    .resource-continue,
+    .resource-detail-meta,
+    .checklist-heading + .resource-checklist
+  ) {
+  border-color: var(--border);
+}
+
+/* Semantic accents, applied to existing icons and surfaces. */
+html[data-theme] .stat-card[data-metric="problemsSolved"] {
+  --stat-accent: var(--color-solved);
+}
+html[data-theme] .stat-card[data-metric="projectsBuilt"] {
+  --stat-accent: var(--color-projects);
+}
+html[data-theme] .stat-card[data-metric="labsCompleted"] {
+  --stat-accent: var(--color-debugging);
+}
+html[data-theme] .stat-card[data-metric="agentsCreated"] {
+  --stat-accent: var(--color-agents);
+}
+html[data-theme] .stat-card {
+  background:
+    linear-gradient(
+      145deg,
+      transparent 40%,
+      color-mix(
+        in srgb,
+        var(--stat-accent) calc(var(--stat-tint) * 100%),
+        transparent
+      )
+    ),
+    var(--surface-finish), var(--surface);
+}
+html[data-theme] .stat-card .stat-top .round-icon {
+  color: var(--stat-accent);
+  background:
+    linear-gradient(135deg, var(--tile-light), transparent 58%),
+    color-mix(in srgb, var(--stat-accent) 16%, transparent);
+  border-color: color-mix(in srgb, var(--stat-accent) 42%, var(--border));
+  box-shadow:
+    inset 0 1px 0 var(--accent-reflection),
+    inset 0 -1px 0 #00000012;
+}
+html[data-theme] .round-icon {
+  background: var(--accent-soft);
+  color: var(--identity);
+  border-color: var(--border);
+  box-shadow: inset 0 1px 0 var(--accent-reflection);
+}
+html[data-theme] .round-icon.blue {
+  color: var(--color-data);
+  background: color-mix(in srgb, var(--color-data) 10%, transparent);
+}
+html[data-theme] .round-icon.green {
+  color: var(--color-progress);
+  background: color-mix(in srgb, var(--color-progress) 10%, transparent);
+}
+html[data-theme] .round-icon.pink {
+  color: var(--color-debugging);
+  background: color-mix(in srgb, var(--color-debugging) 10%, transparent);
+}
+html[data-theme] .round-icon.orange {
+  color: var(--color-debugging);
+  background: color-mix(in srgb, var(--color-debugging) 10%, transparent);
+}
+html[data-theme] .growth-pill {
+  color: var(--color-progress);
+  background: color-mix(in srgb, var(--color-progress) 14%, transparent);
+  box-shadow: none;
+}
+html[data-theme] .rating-decrease {
+  color: var(--color-error);
+  background: color-mix(in srgb, var(--color-error) 10%, transparent);
+}
+html[data-theme] .rating-level {
+  color: var(--color-data);
+}
+html[data-theme] .rank-hex {
+  background: color-mix(in srgb, var(--color-rank) 55%, var(--surface-solid));
+  color: var(--color-rank);
+}
+html[data-theme] .rank-hex::before {
+  background: var(--surface-solid);
+  border-color: var(--border);
+}
+html[data-theme] .rank-hex > span {
+  color: var(--color-rank);
+}
+html[data-theme] .laurel {
+  color: var(--color-rank);
+}
+html[data-theme] .rank-emblem > i {
+  background: #00000012;
+}
+html[data-theme] .rank-hex svg {
+  filter: none;
+}
+html[data-theme] .verified-icon {
+  color: var(--identity);
+  filter: none;
+}
+html[data-theme] .profile-avatar {
+  border-color: var(--profile-border);
+  background: var(--surface-solid);
+  box-shadow:
+    0 5px 14px #00000012,
+    inset 0 1px 0 var(--inset-light);
+}
+html[data-theme] :is(.mini-avatar, .letter-avatar) {
+  border-color: var(--border);
+}
+html[data-theme] .online-dot {
+  border-color: var(--surface-solid);
+}
+html[data-theme] .avatar-fallback {
+  background: var(--control);
+  color: var(--text);
+}
+html[data-theme] .letter-avatar {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: none;
+}
+html[data-theme] .notification-button i {
+  background: var(--identity);
+  box-shadow: 0 0 0 2px var(--bg);
+}
+html[data-theme] .topbar-divider {
+  background: var(--border);
+}
+html[data-theme] .skill-track,
+html[data-theme] .resource-track {
+  background: var(--track);
+  box-shadow: inset 0 1px 2px #00000008;
+}
+html[data-theme] :is(.skill-track > span, .resource-track > span) {
+  background: var(--color-data);
+  box-shadow: inset 0 1px 0 var(--inset-light);
+}
+html[data-theme] .skill-row {
+  --skill-color: var(--color-data);
+}
+html[data-theme] .skill-row[data-skill="coffee"] {
+  --skill-color: var(--skill-java);
+}
+html[data-theme] .skill-row[data-skill="layers"] {
+  --skill-color: var(--skill-backend);
+}
+html[data-theme] .skill-row[data-skill="database"] {
+  --skill-color: var(--skill-sql);
+}
+html[data-theme] .skill-row[data-skill="network"] {
+  --skill-color: var(--skill-design);
+}
+html[data-theme] .skill-row[data-skill="bug"] {
+  --skill-color: var(--skill-debugging);
+}
+html[data-theme] .skill-row .skill-track > span {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--skill-color) 88%, var(--surface-solid)),
+    var(--skill-color) 68%,
+    color-mix(in srgb, var(--skill-color) 85%, white)
+  );
+  box-shadow: inset 0 1px 0 var(--accent-reflection);
+}
+html[data-theme] .skill-row .skill-icon {
+  color: var(--skill-color);
+}
+html[data-theme] .recharts-area-curve {
+  filter: none;
+}
+html[data-theme] .platform-score {
+  color: var(--color-data);
+}
+html[data-theme] .platform-row:hover {
+  background: var(--hover);
+}
+html[data-theme] .level-0 {
+  background: var(--heat-0);
+}
+html[data-theme] .level-1 {
+  background: var(--heat-1);
+}
+html[data-theme] .level-2 {
+  background: var(--heat-2);
+}
+html[data-theme] .level-3 {
+  background: var(--heat-3);
+}
+html[data-theme] .level-4 {
+  background: var(--heat-4);
+}
+html[data-theme] .heatmap-cell {
+  border-color: #ffffff08;
+  box-shadow: none;
+}
+html[data-theme] .milestone-dots > i {
+  background: var(--track);
+}
+html[data-theme] .milestone-dots > i.unlocked {
+  background: var(--color-rank);
+}
+html[data-theme] .achievement-badge {
+  filter: none;
+}
+html[data-theme] .achievement-badge.purple {
+  --tone: var(--color-solved);
+  --tone-dark: var(--color-solved);
+}
+html[data-theme] .achievement-badge.slate {
+  --tone: var(--color-rank);
+  --tone-dark: var(--color-rank);
+}
+html[data-theme] .achievement-badge.blue {
+  --tone: var(--color-projects);
+  --tone-dark: var(--color-projects);
+}
+html[data-theme] .achievement-badge.green {
+  --tone: var(--color-agents);
+  --tone-dark: var(--color-agents);
+}
+html[data-theme] .badge-outline {
+  background: color-mix(
+    in srgb,
+    var(--tone) var(--badge-outline-strength),
+    var(--border)
+  );
+}
+html[data-theme] .badge-inner {
+  background: var(--badge-face);
+}
+html[data-theme] .badge-inner::before {
+  opacity: var(--badge-fill);
+}
+html[data-theme] .badge-inner > svg {
+  color: var(--badge-ink);
+  filter: none;
+}
+html[data-theme="focus"] .badge-inner > svg {
+  color: var(--tone);
+}
+html[data-theme] .badge-sparkle {
+  color: var(--tone);
+  text-shadow: none;
+  opacity: var(--badge-sparkle-opacity);
+}
+
+/* Existing buttons, inputs, menus and feedback inherit the same palette. */
+html[data-theme]
+  :is(
+    .icon-button,
+    .button-secondary,
+    .search-trigger,
+    .select-wrap,
+    .role-badge,
+    .demo-pill,
+    .rating-level,
+    .platform-score,
+    .filter-tabs,
+    .library-search,
+    .resource-tag,
+    .social-links a
+  ) {
+  background: var(--control);
+  border-color: var(--border);
+  color: var(--muted);
+  box-shadow: inset 0 1px 0 var(--inset-light);
+}
+html[data-theme] .social-links a {
+  border-radius: 7px;
+}
+html[data-theme]
+  :is(.icon-button:hover, .button-secondary:hover, .social-links a:hover) {
+  background: var(--hover);
+  color: var(--text);
+}
+html[data-theme] .button-primary {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent) 92%, white),
+    var(--accent) 65%,
+    color-mix(in srgb, var(--accent) 94%, black)
+  );
+  color: var(--on-accent);
+  border-color: var(--accent);
+  box-shadow:
+    inset 0 1px 0 var(--accent-reflection),
+    inset 0 -1px 0 #00000012;
+}
+html[data-theme] .button-primary:hover {
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--accent-hover) 92%, white),
+    var(--accent-hover)
+  );
+  box-shadow: inset 0 1px 0 var(--accent-reflection);
+}
+html[data-theme] .button-ghost {
+  color: var(--muted);
+}
+html[data-theme] .select-quiet {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+html[data-theme] :is(.platform-score, .rating-level) {
+  color: var(--color-data);
+}
+html[data-theme] :is(.modal, .account-popover, .toast) {
+  background: var(--surface-solid);
+  border-color: var(--border);
+  color: var(--text);
+  box-shadow:
+    0 20px 60px #0000002b,
+    inset 0 1px 0 var(--inset-light);
+}
+html[data-theme] .modal::backdrop {
+  background: #02070d80;
+  backdrop-filter: blur(8px);
+}
+html[data-theme] :is(.profile-form label, .connection-notice p) {
+  color: var(--muted);
+}
+html[data-theme]
+  :is(
+    .profile-form input,
+    .profile-form textarea,
+    .profile-form select,
+    .input-with-prefix,
+    .global-search,
+    .library-search,
+    .resource-checklist label
+  ) {
+  background: var(--control);
+  border-color: var(--border);
+  color: var(--text);
+}
+html[data-theme] .input-with-prefix input {
+  background: transparent;
+}
+html[data-theme] :is(.global-search input, .library-search input) {
+  color: var(--text);
+}
+html[data-theme] :is(input, textarea)::placeholder {
+  color: var(--muted);
+  opacity: 0.85;
+}
+html[data-theme]
+  :is(.profile-form input, .profile-form textarea, .profile-form select):focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+html[data-theme] :is(a, button, summary):focus-visible {
+  outline-color: var(--accent);
+}
+html[data-theme] kbd {
+  background: var(--control);
+  color: var(--muted);
+  border-color: var(--border);
+}
+html[data-theme] :is(.info-note, .connection-notice) {
+  color: var(--muted);
+  background: var(--control);
+  border-color: var(--border);
+}
+html[data-theme] .connection-notice.is-error {
+  background: color-mix(in srgb, var(--color-error) 5%, var(--surface-solid));
+  border-color: color-mix(in srgb, var(--color-error) 30%, var(--border));
+}
+html[data-theme] .form-error {
+  color: var(--color-error);
+}
+html[data-theme] .panel-skeleton i {
+  background: linear-gradient(
+    90deg,
+    var(--control),
+    var(--track),
+    var(--control)
+  );
+  background-size: 200% 100%;
+}
+html[data-theme] .search-result-icon {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+html[data-theme] .search-results > a:hover {
+  background: var(--hover);
+}
+html[data-theme]
+  :is(
+    .toast > span,
+    .connection-status.verified,
+    .resource-tag.complete,
+    .resource-checklist label.checked
+  ) {
+  background: color-mix(in srgb, var(--color-progress) 10%, transparent);
+  color: var(--color-progress);
+  border-color: color-mix(in srgb, var(--color-progress) 25%, var(--border));
+}
+html[data-theme] .connection-status.pending {
+  color: var(--color-rank);
+  background: color-mix(in srgb, var(--color-rank) 10%, transparent);
+}
+html[data-theme] .connection-status.error {
+  color: var(--color-error);
+  background: color-mix(in srgb, var(--color-error) 10%, transparent);
+}
+html[data-theme] .source-api {
+  color: var(--color-progress);
+  border-color: var(--border);
+}
+html[data-theme] .library-banner {
+  background: var(--profile-surface);
+  border-color: var(--border);
+}
+html[data-theme] .library-banner-icon {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--border);
+  box-shadow: inset 0 1px 0 var(--inset-light);
+}
+html[data-theme] .filter-tabs > button.selected {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+html[data-theme] .custom-checkbox {
+  background: var(--control);
+  border-color: var(--border);
+}
+
+.theme-toggle {
+  flex-shrink: 0;
+  cursor: pointer;
+}
+html[data-theme] .theme-toggle[aria-pressed="true"] {
+  color: var(--accent);
+}
+@media (hover: hover) {
+  html[data-theme] .glass:is(.card, .stat-card):hover {
+    box-shadow: var(--surface-shadow-hover);
+  }
+  html[data-theme] .profile-hero:hover {
+    box-shadow: var(--profile-shadow);
+  }
+}
+/* Focus changes emphasis, never the amount or placement of information. */
+html[data-theme="focus"] .streak-stars {
+  opacity: 0;
+}
+html[data-theme="focus"] .badge-sparkle {
+  opacity: 0;
+}
+html[data-theme="focus"] .badge-inner::after {
+  opacity: 0.65;
+}
+html[data-theme="focus"] .stat-value {
+  color: #f5f5f5;
+}
+html[data-theme="focus"] .achievement:hover .achievement-badge {
+  transform: none;
+}
+html[data-theme="focus"] .stat-card:hover {
+  transform: none;
+}
+html[data-theme="focus"] .glass {
+  transition: none;
+}
+@media (max-width: 520px) {
+  .topbar-actions {
+    gap: 6px;
+  }
+  html[data-theme] .theme-toggle {
+    width: 29px;
+    height: 30px;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme] .glass:is(.card, .stat-card) {
+    transition: none;
+  }
+}

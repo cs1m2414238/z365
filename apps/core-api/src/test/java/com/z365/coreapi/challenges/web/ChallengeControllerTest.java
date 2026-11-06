@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -106,6 +108,7 @@ class ChallengeControllerTest {
 
     @Test
     @DisplayName("POST /api/v1/challenges creates challenge and returns 201")
+    @WithMockUser(roles = "ADMIN")
     void shouldCreateChallenge() throws Exception {
         CreateChallengeRequest request = CreateChallengeRequest.builder()
                 .title("Valid Challenge")
@@ -133,6 +136,7 @@ class ChallengeControllerTest {
         when(challengeService.createChallenge(any(CreateChallengeRequest.class))).thenReturn(response);
 
         mockMvc.perform(post("/api/v1/challenges")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
@@ -143,6 +147,7 @@ class ChallengeControllerTest {
 
     @Test
     @DisplayName("POST /api/v1/challenges returns 400 when title is blank")
+    @WithMockUser(roles = "ADMIN")
     void shouldReturn400WhenValidationFails() throws Exception {
         CreateChallengeRequest request = CreateChallengeRequest.builder()
                 .title("")
@@ -151,10 +156,24 @@ class ChallengeControllerTest {
                 .build();
 
         mockMvc.perform(post("/api/v1/challenges")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.validationErrors.title").exists());
+    }
+
+    @Test
+    void rejectsAnonymousChallengeCreation() throws Exception {
+        mockMvc.perform(post("/api/v1/challenges").contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    void rejectsChallengeCreationByRegularUsers() throws Exception {
+        mockMvc.perform(post("/api/v1/challenges").with(csrf()).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isForbidden());
     }
 }

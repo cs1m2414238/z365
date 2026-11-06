@@ -1,0 +1,22 @@
+{
+  "name": "z365",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/web",
+    "packages/contracts"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@z365/web",
+    "dev:local": "pwsh -NoProfile -File scripts/start-local.ps1",
+    "build": "npm run build --workspace=@z365/web",
+    "start": "npm run start --workspace=@z365/web",
+    "typecheck": "npm run typecheck --workspace=@z365/web",
+    "test": "npm run test --workspace=@z365/web",
+    "db:up": "docker compose --env-file .env -f infra/docker-compose.yml up -d",
+    "db:down": "docker compose --env-file .env -f infra/docker-compose.yml down"
+  },
+  "engines": {
+    "node": ">=26 <27"
+  }
+}

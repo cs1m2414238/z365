@@ -1,27 +1,7 @@
-# Agent Service (Python / FastAPI)
+# Agent service scaffold
 
-Dedicated microservice for AI agents, prompt management, LLM interactions, and automated code review workflows.
+This directory reserves the future AI worker boundary. `main.py` is empty; it does not start FastAPI, call models or provide agent tools. Requirements and the Dockerfile are preparation only.
 
-## 🛠️ Tech Stack
-- Python 3.11+
-- FastAPI & Pydantic
-- Uvicorn
-- HTTPX for async outbound requests
+Implement one evaluated, permission-checked agent only after the profile and coding foundations are reliable. Model responses must not be presented as verified grading. The planned port is 8000; no service or documentation endpoint currently listens there.
 
-## 🚀 Local Development
-```bash
-cd agent-service
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-# source .venv/bin/activate
-pip install -r requirements.txt
-python main.py
-```
-Runs at `http://localhost:8000`. API docs available at `http://localhost:8000/docs`.
-
-## 🌐 Deployment
-- **Target**: Google Cloud Run
-- Scalable on demand (can scale to zero when idle).
-
+See the [architecture](../../docs/architecture.md) for the intended boundary.
