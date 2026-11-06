@@ -39,6 +39,10 @@ jobs:
       - name: Verify Java Version
         run: java -version
 
+      - name: Make Maven Wrapper Executable
+        working-directory: apps/core-api
+        run: chmod +x ./mvnw
+
       - name: Build and Test with Maven
         working-directory: apps/core-api
         env:
